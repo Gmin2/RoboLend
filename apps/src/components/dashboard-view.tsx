@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { TokenIcon } from "@/components/token-icon"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useAccount } from "wagmi"
@@ -182,9 +183,7 @@ export function DashboardView() {
                 className="grid grid-cols-7 gap-4 p-4 border-b border-white/5 hover:bg-white/5 transition-colors items-center group"
               >
                 <div className="col-span-2 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold group-hover:bg-white group-hover:text-black transition-colors">
-                    {token.symbol[0]}
-                  </div>
+                  <TokenIcon symbol={token.symbol} />
                   <div>
                     <div className="text-sm text-white">{token.symbol}</div>
                     <div className="text-[10px] text-[#888888]">

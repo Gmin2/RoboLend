@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card"
+import { TokenIcon } from "@/components/token-icon"
 import { TOKENS, EQUITY_TOKENS } from "@/config/contracts"
 import { useTokenPrices, useMarketStatus, useRiskParams, useProtocolStats, usePoolWethBalance } from "@/hooks/useProtocol"
 import { formatPrice, formatBps, formatRay, formatWad, formatTokenAmount } from "@/lib/format"
@@ -99,9 +100,7 @@ export function MarketsView() {
               className="grid grid-cols-8 gap-3 p-4 border-b border-white/5 hover:bg-white/5 transition-colors items-center group"
             >
               <div className="col-span-2 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold group-hover:bg-white group-hover:text-black transition-colors">
-                  {token.symbol[0]}
-                </div>
+                <TokenIcon symbol={token.symbol} />
                 <div>
                   <div className="text-sm text-white group-hover:text-[#00ff66] transition-colors">
                     {token.symbol}

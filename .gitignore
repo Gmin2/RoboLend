@@ -20,3 +20,7 @@ frontend/dist/
 scripts/deploy.sh   
 scripts/interact.sh
 scripts/liquidate.sh
+
+FRONTEND.md
+diagrams/
+scripts.md

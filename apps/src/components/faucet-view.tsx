@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { TokenIcon } from "@/components/token-icon"
 import { useAccount } from "wagmi"
 import { TOKENS } from "@/config/contracts"
 import { useTokenBalances, useTokenPrices } from "@/hooks/useProtocol"
@@ -75,9 +76,7 @@ export function FaucetView() {
                   className="flex items-center justify-between py-3 border-b border-white/5 last:border-0"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold">
-                      {token.symbol[0]}
-                    </div>
+                    <TokenIcon symbol={token.symbol} className="w-7 h-7" />
                     <div>
                       <div className="text-sm">{token.symbol}</div>
                       <div className="text-[10px] text-[#888888]">{token.name}</div>
