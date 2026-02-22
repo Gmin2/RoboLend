@@ -1,0 +1,22 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.20"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+evm_version = "paris"
+chain_id = 46630
+
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "forge-std/=lib/forge-std/src/",
+    "@arbitrum/nitro-contracts/src/precompiles/=lib/nitro-contracts/src/precompiles/",
+]
+
+[rpc_endpoints]
+robinhood_testnet = "https://rpc.testnet.chain.robinhood.com"
+
+[etherscan]
+robinhood_testnet = { key = "", chain = 46630, url = "https://explorer.testnet.chain.robinhood.com/api/" }
