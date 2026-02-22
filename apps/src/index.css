@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-nexus-bg: #050505;
+  --color-nexus-surface: rgba(20, 20, 20, 0.6);
+  --color-nexus-border: rgba(255, 255, 255, 0.1);
+  --color-nexus-border-strong: rgba(255, 255, 255, 0.25);
+  --color-nexus-text: #ffffff;
+  --color-nexus-text-muted: #888888;
+  --color-nexus-green: #00ff66;
+  --color-nexus-red: #ff3333;
+  --color-nexus-orange: #ff4e00;
+}
+
+body {
+  background-color: var(--color-nexus-bg);
+  color: var(--color-nexus-text);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Grid Backgrounds ── */
+
+.bg-grid-minor {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Prominent major grid — thick dark lines like the reference */
+.major-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 25vw 33.333vh;
+}
+
+.bg-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+}
+
+/* ── Corner bracket decorations ── */
+.bracket-tl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid var(--color-nexus-border-strong);
+  border-left: 1px solid var(--color-nexus-border-strong);
+}
+
+.bracket-tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid var(--color-nexus-border-strong);
+  border-right: 1px solid var(--color-nexus-border-strong);
+}
+
+.bracket-bl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 1px solid var(--color-nexus-border-strong);
+  border-left: 1px solid var(--color-nexus-border-strong);
+}
+
+.bracket-br {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 1px solid var(--color-nexus-border-strong);
+  border-right: 1px solid var(--color-nexus-border-strong);
+}
+
+/* ── Noise / Grain Overlays ── */
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grain-heavy {
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-nexus-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-nexus-border-strong);
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-nexus-text-muted);
+}
+
+/* ── Static texture effects (no animation) ── */
+
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  background-size: 100% 3px;
+}
+
+.scratch-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+}
+
+/* ── Scattered hatching patches ── */
+.hatch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* Individual hatch patches — diagonal lines in scattered positions */
+.hatch-patch {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.7) 3px,
+      rgba(255, 255, 255, 0.7) 4px
+    );
+  mask-image: linear-gradient(135deg, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(135deg, black 70%, transparent 100%);
+}
+
+.hatch-patch-reverse {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.10;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.6) 3px,
+      rgba(255, 255, 255, 0.6) 4px
+    );
+  mask-image: linear-gradient(225deg, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(225deg, black 70%, transparent 100%);
+}
