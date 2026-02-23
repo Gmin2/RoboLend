@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { TokenIcon } from "@/components/token-icon"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { OracleBanner } from "@/components/oracle-banner"
 import { useAccount } from "wagmi"
 import { TOKENS, EQUITY_TOKENS } from "@/config/contracts"
 import { useUserPosition, useTokenPrices, useMarketStatus, useTokenBalances, useRiskParams } from "@/hooks/useProtocol"
@@ -96,6 +97,8 @@ export function DashboardView() {
           <span className="font-mono">{shortenAddress(address!)}</span>
         </div>
       </div>
+
+      <OracleBanner />
 
       {/* Position Summary Cards */}
       <div className="grid grid-cols-4 gap-4 mb-8">

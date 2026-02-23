@@ -1,15 +1,30 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { TokenIcon } from "@/components/token-icon"
+import { TxStatus } from "@/components/tx-status"
 import { useAccount } from "wagmi"
-import { TOKENS } from "@/config/contracts"
+import { TOKENS, DEFAULT_PRICES } from "@/config/contracts"
 import { useTokenBalances, useTokenPrices } from "@/hooks/useProtocol"
+import { useRefreshPrices, useSetMarketStatus } from "@/hooks/useProtocolActions"
 import { formatTokenAmount, tokenAmountToNumber, priceToNumber } from "@/lib/format"
+import type { Address } from "viem"
 
 export function FaucetView() {
   const { address, isConnected } = useAccount()
   const balances = useTokenBalances(address)
   const prices = useTokenPrices()
+  const refreshPrices = useRefreshPrices()
+  const setMarketStatus = useSetMarketStatus()
+
+  const handleOpenAllMarkets = () => {
+    // Open markets one at a time — start with first token
+    openMarketSequentially(0)
+  }
+
+  const openMarketSequentially = (index: number) => {
+    if (index >= TOKENS.length) return
+    setMarketStatus.setMarketStatus(TOKENS[index].address as Address, true)
+  }
 
   return (
     <div className="w-full h-full flex flex-col pt-8 relative z-20 max-w-3xl mx-auto overflow-y-auto pb-16">
@@ -21,6 +36,70 @@ export function FaucetView() {
           // TESTNET TOKEN FAUCET
         </div>
       </div>
+
+      {/* Oracle Admin Panel */}
+      <Card className="p-6 mb-6">
+        <div className="text-[10px] text-[#888888] tracking-widest uppercase mb-4">
+          // ORACLE ADMIN
+        </div>
+        <p className="text-sm text-[#888888] mb-4 leading-relaxed">
+          Oracle prices expire after 1 hour. Refresh them to keep the protocol
+          operational. This sets prices for all supported assets.
+        </p>
+
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {TOKENS.map((t) => (
+            <div
+              key={t.symbol}
+              className="flex items-center justify-between border border-white/10 bg-black/30 px-3 py-2"
+            >
+              <div className="flex items-center gap-2">
+                <TokenIcon symbol={t.symbol} className="w-5 h-5" />
+                <span className="text-xs font-mono">{t.symbol}</span>
+              </div>
+              <span className="text-xs font-mono text-[#00ff66]">
+                ${(Number(DEFAULT_PRICES[t.symbol]) / 1e8).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-4">
+          <Button
+            onClick={() => refreshPrices.refreshPrices()}
+            disabled={refreshPrices.isPending || refreshPrices.isConfirming}
+          >
+            {refreshPrices.isPending || refreshPrices.isConfirming
+              ? "Refreshing..."
+              : "Refresh All Prices"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={handleOpenAllMarkets}
+            disabled={setMarketStatus.isPending || setMarketStatus.isConfirming}
+          >
+            {setMarketStatus.isPending || setMarketStatus.isConfirming
+              ? "Opening..."
+              : "Open All Markets"}
+          </Button>
+        </div>
+        <TxStatus
+          isPending={refreshPrices.isPending}
+          isConfirming={refreshPrices.isConfirming}
+          isSuccess={refreshPrices.isSuccess}
+          error={refreshPrices.error}
+          hash={refreshPrices.hash}
+        />
+        {setMarketStatus.hash && (
+          <TxStatus
+            isPending={setMarketStatus.isPending}
+            isConfirming={setMarketStatus.isConfirming}
+            isSuccess={setMarketStatus.isSuccess}
+            error={setMarketStatus.error}
+            hash={setMarketStatus.hash}
+          />
+        )}
+      </Card>
 
       <Card className="p-6 mb-6">
         <div className="text-[10px] text-[#888888] tracking-widest uppercase mb-4">

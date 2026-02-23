@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { TxStatus } from "@/components/tx-status"
+import { OracleBanner } from "@/components/oracle-banner"
 import { useAccount } from "wagmi"
 import type { Address } from "viem"
 import { EQUITY_TOKENS, LENDING_POOL } from "@/config/contracts"
@@ -66,6 +67,8 @@ export function SupplyView() {
           // DEPOSIT & WITHDRAW COLLATERAL
         </div>
       </div>
+
+      <OracleBanner />
 
       {/* Tab Toggle */}
       <div className="flex gap-0 mb-8">

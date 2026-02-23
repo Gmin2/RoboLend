@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { TxStatus } from "@/components/tx-status"
+import { OracleBanner } from "@/components/oracle-banner"
 import { useAccount } from "wagmi"
 import type { Address } from "viem"
 import { TOKENS, LENDING_POOL, TOKEN_ADDRESSES } from "@/config/contracts"
@@ -71,6 +72,8 @@ export function BorrowView() {
           // BORROW & REPAY WETH
         </div>
       </div>
+
+      <OracleBanner />
 
       {/* Tab Toggle */}
       <div className="flex gap-0 mb-8">

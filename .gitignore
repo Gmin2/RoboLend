@@ -24,3 +24,5 @@ scripts/liquidate.sh
 FRONTEND.md
 diagrams/
 scripts.md
+
+.claude/

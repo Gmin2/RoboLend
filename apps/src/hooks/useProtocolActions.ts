@@ -3,8 +3,12 @@ import { useQueryClient } from "@tanstack/react-query"
 import type { Address } from "viem"
 import {
   LENDING_POOL,
+  MOCK_PRICE_ORACLE,
   lendingPoolAbi,
   erc20Abi,
+  oracleAbi,
+  TOKENS,
+  DEFAULT_PRICES,
 } from "@/config/contracts"
 
 function useContractWrite() {
@@ -108,6 +112,37 @@ export function useLiquidate() {
         abi: lendingPoolAbi,
         functionName: "liquidate",
         args: [borrower, collateralAsset, debtToRepay],
+      }),
+  }
+}
+
+export function useRefreshPrices() {
+  const tx = useContractWrite()
+  return {
+    ...tx,
+    refreshPrices: () => {
+      const assets = TOKENS.map((t) => t.address) as Address[]
+      const prices = TOKENS.map((t) => DEFAULT_PRICES[t.symbol])
+      tx.write({
+        address: MOCK_PRICE_ORACLE,
+        abi: oracleAbi,
+        functionName: "setPrices",
+        args: [assets, prices],
+      })
+    },
+  }
+}
+
+export function useSetMarketStatus() {
+  const tx = useContractWrite()
+  return {
+    ...tx,
+    setMarketStatus: (asset: Address, open: boolean) =>
+      tx.write({
+        address: MOCK_PRICE_ORACLE,
+        abi: oracleAbi,
+        functionName: "setMarketStatus",
+        args: [asset, open],
       }),
   }
 }

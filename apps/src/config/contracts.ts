@@ -48,7 +48,19 @@ export const lendingPoolAbi = [
 export const oracleAbi = [
   { type: "function", name: "getPrice", inputs: [{ name: "asset", type: "address" }], outputs: [{ name: "priceUsd", type: "uint256" }], stateMutability: "view" },
   { type: "function", name: "isMarketOpen", inputs: [{ name: "asset", type: "address" }], outputs: [{ name: "", type: "bool" }], stateMutability: "view" },
+  { type: "function", name: "setPrices", inputs: [{ name: "assets", type: "address[]" }, { name: "priceValues", type: "uint256[]" }], outputs: [], stateMutability: "nonpayable" },
+  { type: "function", name: "setMarketStatus", inputs: [{ name: "asset", type: "address" }, { name: "open", type: "bool" }], outputs: [], stateMutability: "nonpayable" },
 ] as const
+
+// Default prices (8 decimals): TSLA $250, AMZN $200, PLTR $75, NFLX $1000, AMD $120, WETH $2000
+export const DEFAULT_PRICES: Record<string, bigint> = {
+  TSLA: 25000000000n,
+  AMZN: 20000000000n,
+  PLTR: 7500000000n,
+  NFLX: 100000000000n,
+  AMD: 12000000000n,
+  WETH: 200000000000n,
+}
 
 export const liquidationEngineAbi = [
   {
